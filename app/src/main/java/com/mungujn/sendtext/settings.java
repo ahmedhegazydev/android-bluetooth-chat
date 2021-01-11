@@ -3,12 +3,12 @@ package com.mungujn.sendtext;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Created by Nickson on 11/01/2015.
  */
-public class settings extends ActionBarActivity {
+public class settings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

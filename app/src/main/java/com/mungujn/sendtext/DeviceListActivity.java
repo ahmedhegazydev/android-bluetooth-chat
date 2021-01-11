@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;

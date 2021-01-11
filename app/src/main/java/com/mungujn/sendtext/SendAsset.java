@@ -7,12 +7,13 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import androidx.appcompat.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,7 +24,7 @@ import java.io.InputStream;
 /**
  * Created by Nickson on 27/01/2015.
  */
-public class SendAsset extends ActionBarActivity implements View.OnClickListener {
+public class SendAsset extends AppCompatActivity implements View.OnClickListener {
     TextView textView;
     Button generate,send;
     ProgressBar progressBar;

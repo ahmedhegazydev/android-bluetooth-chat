@@ -2,6 +2,8 @@ package com.mungujn.sendtext;
 
 import android.app.ActionBar;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,7 +20,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 
-import androidx.appcompat.app.ActionBarActivity;
 
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
@@ -34,7 +35,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 
-public class MainAct extends ActionBarActivity implements View.OnClickListener {
+public class MainAct extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -229,6 +230,7 @@ Activity activity = this;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 2) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
@@ -239,8 +241,9 @@ Activity activity = this;
 
             }
         }
-        if(requestCode ==24){
-            if(resultCode == RESULT_CANCELED) {}
+        if (requestCode == 24) {
+            if (resultCode == RESULT_CANCELED) {
+            }
         }
     }
     private final Handler mHandler = new Handler(){
