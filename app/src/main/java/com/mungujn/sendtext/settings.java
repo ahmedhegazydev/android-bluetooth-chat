@@ -1,10 +1,9 @@
 package com.mungujn.sendtext;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarActivity;
 
 /**
  * Created by Nickson on 11/01/2015.
