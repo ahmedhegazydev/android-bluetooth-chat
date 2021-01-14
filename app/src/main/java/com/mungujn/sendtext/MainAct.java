@@ -3,9 +3,11 @@ package com.mungujn.sendtext;
 import android.app.ActionBar;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.os.PersistableBundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +41,9 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(bluetoothservice!=null){bluetoothservice.stop();}
+        if (bluetoothservice != null) {
+            bluetoothservice.stop();
+        }
     }
 
     @Override
@@ -65,75 +69,178 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
 
     BluetoothDevice device;
     BluetoothAdapter adapter;
-    BluetoothService bluetoothservice=null;
+    BluetoothService bluetoothservice = null;
 
     public static final int MESSAGE_STATE_CHANGE = 1;
     public static final int MESSAGE_READ = 2;
     public static final int MESSAGE_WRITE = 3;
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
-    public static final int RECIEVED_MESSAGE=11;
+    public static final int RECIEVED_MESSAGE = 11;
     public static final int ATTEMPTING = 6;
     public static final int CONNECTED_TO = 7;
     public static final int CONNECT_THREAD = 8;
     public static final int CONNECTED_THREAD = 9;
-    public static final int ERROR_DURING_WRITE= 10;
+    public static final int ERROR_DURING_WRITE = 10;
     SharedPreferences data;
     ClipboardManager cliper;
     public static String filename = "SharedString";
-    public String ConnectedDeviceName="Null";
-    boolean btDef,btDef2;
-    public String pasteData= "";
-    public String mostrecent="Status";
-
+    public String ConnectedDeviceName = "Null";
+    boolean btDef, btDef2;
+    public String pasteData = "";
+    public String mostrecent = "Status";
 
 
     public static final String DEVICE_NAME = "device_name";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        adapter=BluetoothAdapter.getDefaultAdapter();
+        adapter = BluetoothAdapter.getDefaultAdapter();
         cliper = (ClipboardManager) getSystemService(this.CLIPBOARD_SERVICE);
         initializeVars();
-        data = getSharedPreferences(filename,0);
+        data = getSharedPreferences(filename, 0);
         obtainPrefs();
         if (!adapter.isEnabled()/*&&btDef==true*/) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, 24);
         }
-        bluetoothservice = new BluetoothService(this,mHandler);
+        bluetoothservice = new BluetoothService(this, mHandler);
         loadDefDev();
         tv1.setText(mostrecent);
+
+
+
+
+
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+
+
+        String flusher = "\\n\\r";
+        String textJson = "{\n" +
+                "  \"data\": {\n" +
+                "    \"arabic_name\": \"\\u0645\\u062d\\u0645\\u062f \\u0645\\u062d\\u0645\\u062f \\u0632\\u0643\\u064a \\u0627\\u0644\\u0645\\u0631\\u0633\\u064a \\u062e\\u0644\\u064a\\u0644\",\n" +
+                "    \"english_name\": \"MOHAMED MOHAMED ZAKI ELMOURSI KHALIL\",\n" +
+                "    \"passport_number\": \"A13237921\",\n" +
+                "    \"national_id\": \"27603181202333\",\n" +
+                "    \"visa_number\": \"6067167724\",\n" +
+                "    \"issue_date\": \"2019\\/11\\/24\",\n" +
+                "    \"program_level\": 3,\n" +
+                "    \"transportation_type\": \"\\u062c\\u0648\\u0649\",\n" +
+                "    \"transportation_name\": \"\\u0627\\u0644\\u062e\\u0637\\u0648\\u0637 \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629\",\n" +
+                "    \"company_name\": \"\\u0628\\u064a\\u062a\\u0643\\u0648 \\u062a\\u0631\\u0627\\u0641\\u064a\\u0644 \",\n" +
+                "    \"qr_code\": \"https:\\/\\/files.egyptumrah.com\\/b\\/po-barcode\\/3f241651-32ec-4384-8655-fe1a75bfacbe\",\n" +
+                "    \"accommodation\": \"4\",\n" +
+                "    \"package\": {\n" +
+                "      \"id\": 20,\n" +
+                "      \"file_code\": \"14419122351125\",\n" +
+                "      \"type\": \"group\",\n" +
+                "      \"transport_type\": \"Air\",\n" +
+                "      \"departure_date\": \"2019-11-25\",\n" +
+                "      \"name\": \"\\u0628\\u064a\\u062a\\u0643\\u0648 1\",\n" +
+                "      \"company_id\": 2029,\n" +
+                "      \"pax\": 48,\n" +
+                "      \"notes\": \"\",\n" +
+                "      \"stars\": 3,\n" +
+                "      \"transporter_company_id\": \"4\",\n" +
+                "      \"transporter_company\": \"\\u0627\\u0644\\u062e\\u0637\\u0648\\u0637 \\u0627\\u0644\\u0633\\u0639\\u0648\\u062f\\u064a\\u0629\",\n" +
+                "      \"return_date\": \"2019-12-09\",\n" +
+                "      \"status\": \"Approved\",\n" +
+                "      \"available_to_edit\": 0,\n" +
+                "      \"supervisors\": [\n" +
+                "        {\n" +
+                "          \"supervisor_id\": \"361282\",\n" +
+                "          \"supervisor_company_id\": 2204,\n" +
+                "          \"request_status\": \"approved\",\n" +
+                "          \"supervisor\": {\n" +
+                "            \"name\": \"\\u0645\\u062d\\u0645\\u0648\\u062f \\u0639\\u0628\\u062f \\u0627\\u0644\\u0645\\u062c\\u064a\\u062f \\u0639\\u0628\\u062f \\u0627\\u0644\\u0641\\u062a\\u0627\\u062d \\u0634\\u0644\\u0628\\u0649\",\n" +
+                "            \"passport\": \"\",\n" +
+                "            \"national_id\": 28202061203912\n" +
+                "          },\n" +
+                "          \"company\": {\n" +
+                "            \"name\": \"\\u0628\\u064a\\u062a\\u0643\\u0648 \\u062a\\u0631\\u0627\\u0641\\u064a\\u0644 \"\n" +
+                "          }\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"livings\": [\n" +
+                "        {\n" +
+                "          \"city\": \"\\u0627\\u0644\\u0645\\u062f\\u064a\\u0646\\u0629\",\n" +
+                "          \"hotel\": \"\\u062d\\u064a\\u0627\\u0629 \\u0627\\u0644\\u0633\\u0644\\u0627\\u0645\",\n" +
+                "          \"check_in\": \"2019-11-25\",\n" +
+                "          \"nights\": 5\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"city\": \"\\u0645\\u0643\\u0629 \\u0627\\u0644\\u0645\\u0643\\u0631\\u0645\\u0629\",\n" +
+                "          \"hotel\": \"\\u0627\\u0644\\u0627\\u0647\\u0631\\u0627\\u0645 \\u0627\\u0644\\u0645\\u0627\\u0633\\u0649(\\u062d\\u0633\\u0646 \\u0645\\u062d\\u0645\\u062f \\u0627\\u0644\\u062e\\u0627\\u0632\\u0646\\u062f\\u0627\\u0631 - \\u062c\\u0648\\u0647\\u0631\\u0629 \\u062e\\u0632\\u0646\\u062f\\u0627\\u0631 \\u0633\\u0627\\u0628\\u0642\\u0627)\",\n" +
+                "          \"check_in\": \"2019-12-02\",\n" +
+                "          \"nights\": 7\n" +
+                "\n" +
+                "        }\n" +
+                "      ],\n" +
+                "      \"dates\": {\n" +
+                "        \"departure\": {\n" +
+                "          \"from\": {\n" +
+                "            \"port\": \"\\u0645\\u0637\\u0627\\u0631 \\u0627\\u0644\\u0642\\u0627\\u0647\\u0631\\u0629 \\u0627\\u0644\\u062f\\u0648\\u0644\\u0649\",\n" +
+                "            \"date\": \"2019-11-25\"\n" +
+                "          },\n" +
+                "          \"to\": {\n" +
+                "            \"port\": \"\\u0627\\u0644\\u0645\\u062f\\u064a\\u0646\\u0629\",\n" +
+                "            \"date\": \"2019-11-25\"\n" +
+                "          }\n" +
+                "        },\n" +
+                "        \"return\": {\n" +
+                "          \"from\": {\n" +
+                "            \"port\": \"\\u062c\\u062f\\u0629\",\n" +
+                "            \"date\": \"2019-12-09\"\n" +
+                "          },\n" +
+                "          \"to\": {\n" +
+                "            \"port\": \"\\u0645\\u0637\\u0627\\u0631 \\u0627\\u0644\\u0642\\u0627\\u0647\\u0631\\u0629 \\u0627\\u0644\\u062f\\u0648\\u0644\\u0649\",\n" +
+                "            \"date\": \"2019-12-09\"\n" +
+                "          }\n" +
+                "        }\n" +
+                "      }\n" +
+                "    }\n" +
+                "  }\n" +
+                "}" + flusher;
+
+
+        editText.setText(textJson);
     }
 
 
-    void obtainPrefs(){
+    void obtainPrefs() {
         SharedPreferences getPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        btDef = getPrefs.getBoolean("checkbox",true);
-        btDef2 = getPrefs.getBoolean("checkbox2",false);
+        btDef = getPrefs.getBoolean("checkbox", true);
+        btDef2 = getPrefs.getBoolean("checkbox2", false);
     }
-    void loadDefDev(){
-        data = getSharedPreferences(filename,0);
-        String address = data.getString("address","Null");
-        if(!address.equalsIgnoreCase("Null")&&btDef2!=false&&adapter.isEnabled())
-        {
+
+    void loadDefDev() {
+        data = getSharedPreferences(filename, 0);
+        String address = data.getString("address", "Null");
+        if (!address.equalsIgnoreCase("Null") && btDef2 != false && adapter.isEnabled()) {
             BluetoothDevice device = adapter.getRemoteDevice(address);
             bluetoothservice.connect(device);
         }
 
     }
-    void initializeVars(){
-        btDef=true;
-        btDef2=false;
-        bluetoothservice=null;
+
+    void initializeVars() {
+        btDef = true;
+        btDef2 = false;
+        bluetoothservice = null;
 
         mOutStringBuffer = new StringBuffer("");
         send = (Button) findViewById(R.id.button_send1);
         send.setOnClickListener(this);
-        editText = (EditText)findViewById(R.id.edit_text_out);
+        editText = (EditText) findViewById(R.id.edit_text_out);
         editText.setOnEditorActionListener(mWriteListener);
-        mConversationView =(ListView)findViewById(R.id.in);
+        mConversationView = (ListView) findViewById(R.id.in);
         // Initialize the array adapter for the conversation thread
         mConversationArrayAdapter = new ArrayAdapter<String>(MainAct.this, R.layout.message);
 
@@ -141,11 +248,12 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
         mConversationView.setOnItemClickListener(mDeviceClickListener);
 
 
-        device=null;
-        tv1 = (TextView)findViewById(R.id.tv1);
+        device = null;
+        tv1 = (TextView) findViewById(R.id.tv1);
 
 
     }
+
     private AdapterView.OnItemClickListener mDeviceClickListener
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, final int arg2, long arg3) {
@@ -154,9 +262,9 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             clipboard.setText(info);
 
-            if(info.length()>9)
-            Toast.makeText(getApplicationContext(),"Copied... " + info.substring(0,6)+"...",Toast.LENGTH_LONG).show();
-            else Toast.makeText(getApplicationContext(),"Copied... ",Toast.LENGTH_LONG).show();
+            if (info.length() > 9)
+                Toast.makeText(getApplicationContext(), "Copied... " + info.substring(0, 6) + "...", Toast.LENGTH_LONG).show();
+            else Toast.makeText(getApplicationContext(), "Copied... ", Toast.LENGTH_LONG).show();
 
             /*
             AlertDialog.Builder alert=new AlertDialog.Builder(MainAct.this);
@@ -174,9 +282,10 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
 
         }
     };
+
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.button_send1:
                 String str = editText.getText().toString();
                 sendMessage(str);
@@ -184,6 +293,7 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
 
         }
     }
+
     /**
      * The action listener for the EditText widget, to listen for the return key
      */
@@ -198,15 +308,17 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
             return true;
         }
     };
-    private void setStatus(CharSequence subtitle){
-Activity activity = this;
+
+    private void setStatus(CharSequence subtitle) {
+        Activity activity = this;
         final ActionBar actionBar = activity.getActionBar();
         if (null == actionBar) {
             return;
         }
         actionBar.setSubtitle(subtitle);
     }
-    public  void sendMessage(String message){
+
+    public void sendMessage(String message) {
         // Check that we're actually connected before trying anything
         if (bluetoothservice.getState() != BluetoothService.STATE_CONNECTED) {
             Toast.makeText(getApplicationContext(), R.string.not_connected, Toast.LENGTH_SHORT).show();
@@ -216,7 +328,7 @@ Activity activity = this;
         // Check that there's actually something to send
         if (message.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write
-            message = message.replace("\n","").replace("\r","")+"\n"+"\n";
+            message = message.replace("\n", "").replace("\r", "") + "\n" + "\n";
 
             byte[] send = message.getBytes();
             bluetoothservice.write(send);
@@ -227,6 +339,7 @@ Activity activity = this;
         }
 
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
@@ -246,13 +359,13 @@ Activity activity = this;
             }
         }
     }
-    private final Handler mHandler = new Handler(){
+
+    private final Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
                 case MESSAGE_STATE_CHANGE:
-                    switch (msg.arg1)
-                    {
+                    switch (msg.arg1) {
                         case ATTEMPTING:
                             tv1.setText(getString(R.string.Status));
                             setStatus(getString(R.string.Status));
@@ -268,7 +381,7 @@ Activity activity = this;
                     ConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
                     Toast.makeText(getApplicationContext(), getString(R.string.connctdto)
                             + ConnectedDeviceName, Toast.LENGTH_SHORT).show();
-                    tv1.setText(getString(R.string.stscnctto)+" "+ConnectedDeviceName);
+                    tv1.setText(getString(R.string.stscnctto) + " " + ConnectedDeviceName);
                     break;
                 case ERROR_DURING_WRITE:
                     Toast.makeText(getApplicationContext(), "Error during write"
@@ -285,21 +398,20 @@ Activity activity = this;
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    mConversationArrayAdapter.add("                              "+":"+ConnectedDeviceName + ":\n" + readMessage);
+                    mConversationArrayAdapter.add("                              " + ":" + ConnectedDeviceName + ":\n" + readMessage);
                     break;
                 case RECIEVED_MESSAGE:
                     // save the connected device's name
                     String xcz = msg.getData().getString("RECV");
-                    Toast.makeText(getApplicationContext(),"Text Recieved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Text Recieved", Toast.LENGTH_SHORT).show();
                     //et2.setText("RECIEVED \n" +
-                      //      " " +xcz);
+                    //      " " +xcz);
                     break;
                 case 200:
-                    Toast.makeText(getApplicationContext(),"Sent", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Sent", Toast.LENGTH_SHORT).show();
                     break;
                 case 700:
-                    switch (msg.arg1)
-                    {
+                    switch (msg.arg1) {
                         case 1:
                             tv1.setText("Staus: Error 1");
                             break;
@@ -310,28 +422,28 @@ Activity activity = this;
                             tv1.setText("Status: Error 3");
                             break;
                         case 4:
-                            tv1.setText("Status: Succesfully Connected to "+ConnectedDeviceName);
+                            tv1.setText("Status: Succesfully Connected to " + ConnectedDeviceName);
                             break;
                     }
                     break;
-                case Constants.MESSAGE_TOAST:
-                     {
-                        Toast.makeText(getApplicationContext(), ConnectedDeviceName+" Disconnected",
-                                Toast.LENGTH_SHORT).show();
-                         tv1.setText("Status: Waiting for devices");
+                case Constants.MESSAGE_TOAST: {
+                    Toast.makeText(getApplicationContext(), ConnectedDeviceName + " Disconnected",
+                            Toast.LENGTH_SHORT).show();
+                    tv1.setText("Status: Waiting for devices");
 
-                         if (bluetoothservice != null&&adapter.isEnabled()) {
-                              {
-                                 bluetoothservice.start();
-                             }
-                         }
-                     }
-                    break;
+                    if (bluetoothservice != null && adapter.isEnabled()) {
+                        {
+                            bluetoothservice.start();
+                        }
+                    }
+                }
+                break;
 
 
             }
         }
     };
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -339,7 +451,7 @@ Activity activity = this;
         // Performing this check in onResume() covers the case in which BT was
         // not enabled during onStart(), so we were paused to enable it...
         // onResume() will be called when ACTION_REQUEST_ENABLE activity returns.
-        if (bluetoothservice != null&&adapter.isEnabled()) {
+        if (bluetoothservice != null && adapter.isEnabled()) {
             if (bluetoothservice.getState() == bluetoothservice.STATE_NONE) {
                 bluetoothservice.start();
             }
@@ -366,45 +478,46 @@ Activity activity = this;
             startActivity(Intent);
             return true;
         }
-        if(id==R.id.wscan){
+        if (id == R.id.wscan) {
             // Launch the DeviceListActivity to see devices and do scan
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
-            startActivityForResult(serverIntent,2);
+            startActivityForResult(serverIntent, 2);
             return true;
         }
-        if(id==R.id.wscan2){
+        if (id == R.id.wscan2) {
             // Launch the DeviceListActivity to see devices and do scan
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
-            startActivityForResult(serverIntent,2);
+            startActivityForResult(serverIntent, 2);
             return true;
         }
-        if(id==R.id.wscan3){
+        if (id == R.id.wscan3) {
             // Launch the DeviceListActivity to see devices and do scan
             bluetoothservice.start();
             return true;
         }
-        if(id==R.id.wscan4){
-            if(cliper.hasPrimaryClip()){
+        if (id == R.id.wscan4) {
+            if (cliper.hasPrimaryClip()) {
                 ClipData.Item item2 = cliper.getPrimaryClip().getItemAt(0);
                 //pasteData = item.getText();
                 //pasteData = item.getText().toString();
                 CharSequence x = item2.getText();
                 editText.setText(x);
-                if(pasteData!=null){
+                if (pasteData != null) {
                     return true;
-                }else{
+                } else {
                     Uri paste = item2.getUri();
-                    if(paste!=null){
+                    if (paste != null) {
                         paste.toString();
-                    }else{
+                    } else {
                         // et2.append("Nothing to paste");
-                        return true;}
+                        return true;
+                    }
                 }
             }
             return true;
         }
 
-        if(id==R.id.zabout){
+        if (id == R.id.zabout) {
             // Launch the DeviceListActivity to see devices and do scan
             Intent serverIntent = new Intent(this, LinksInfo.class);
             startActivity(serverIntent);
