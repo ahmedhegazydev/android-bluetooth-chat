@@ -111,15 +111,11 @@ public class MainAct extends AppCompatActivity implements View.OnClickListener {
         tv1.setText(mostrecent);
 
 
-
-
-
     }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
 
 
         String flusher = "\\n\\r";
